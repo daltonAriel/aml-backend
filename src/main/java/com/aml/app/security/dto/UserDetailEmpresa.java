@@ -20,4 +20,8 @@ public class UserDetailEmpresa {
     private boolean estado;
     private boolean empresaEstado;
     private Set<RolEnumType> roles;
+
+    private String nombre;
+    private String apellido;
+    private String rolDescripcion;
 }

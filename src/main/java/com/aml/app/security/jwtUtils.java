@@ -44,6 +44,9 @@ public class jwtUtils {
                 .claim("empresaId", userPrincipal.getEmpresaId()) // UUID de la empresa
                 .claim("empresaEstado", userPrincipal.isEmpresaEstado())
                 .claim("roles", userPrincipal.getAuthorities())
+                .claim("usuarioNombre", userPrincipal.getUsuarioNombre())
+                .claim("usuarioApellido", userPrincipal.getUsuarioApellido())
+                .claim("usuarioRolDescripcion", userPrincipal.getUsuarioRolDescripcion())
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(getSigningKey())
@@ -59,6 +62,9 @@ public class jwtUtils {
                 .claim("empresaId", userPrincipal.getEmpresaId()) // UUID de la empresa
                 .claim("empresaEstado", userPrincipal.isEmpresaEstado())
                 .claim("roles", userPrincipal.getAuthorities())
+                .claim("usuarioNombre", userPrincipal.getUsuarioNombre())
+                .claim("usuarioApellido", userPrincipal.getUsuarioApellido())
+                .claim("usuarioRolDescripcion", userPrincipal.getUsuarioRolDescripcion())
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + jwtAdminExpirationMs))
                 .signWith(getSigningKey())
@@ -106,6 +112,7 @@ public class jwtUtils {
 
     /**
      * Obtenemos si el token es de un Admin Saas
+     * 
      * @param token
      * @return
      */

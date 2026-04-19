@@ -40,6 +40,9 @@ public class UserDetailService implements UserDetailsService {
                     .id(userAdmin.getUsuarioAdminId())
                     .email(userAdmin.getUsuarioAdminEmail())
                     .password(userAdmin.getUsuarioAdminContrasena())
+                    .nombre(userAdmin.getUsuarioAdiminNombre())
+                    .apellido(userAdmin.getUsuarioAdminApellido())
+                    .rolDescripcion("Administrador")
                     .activo(true)
                     .build();
 
@@ -69,6 +72,9 @@ public class UserDetailService implements UserDetailsService {
                     .estado(user.isUsuarioEstado())
                     .empresaEstado(user.getEmpresa().isEmpresaEstado())
                     .roles(Collections.singleton(user.getRol().getRolNombre()))
+                    .nombre(user.getUsuarioNombre())
+                    .apellido(user.getUsuarioApellido())
+                    .rolDescripcion(user.getRol().getRolDescripcion())
                     .build();
 
             return UserPrincipal.create(userDto);
@@ -87,6 +93,9 @@ public class UserDetailService implements UserDetailsService {
                     .id(userAdmin.getUsuarioAdminId())
                     .email(userAdmin.getUsuarioAdminEmail())
                     .password(userAdmin.getUsuarioAdminContrasena())
+                    .nombre(userAdmin.getUsuarioAdiminNombre())
+                    .apellido(userAdmin.getUsuarioAdminApellido())
+                    .rolDescripcion("Administrador")
                     .activo(true)
                     .build();
 
@@ -120,6 +129,9 @@ public class UserDetailService implements UserDetailsService {
                     .estado(user.isUsuarioEstado())
                     .empresaEstado(user.getEmpresa().isEmpresaEstado())
                     .roles(Collections.singleton(user.getRol().getRolNombre()))
+                    .nombre(user.getUsuarioNombre())
+                    .apellido(user.getUsuarioApellido())
+                    .rolDescripcion(user.getRol().getRolDescripcion())
                     .build();
 
             return UserPrincipal.create(userDto);

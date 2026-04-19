@@ -30,10 +30,15 @@ public class UserPrincipal implements UserDetails {
     private final boolean empresaEstado;
     private final Collection<? extends GrantedAuthority> authorities;
 
+    private final String usuarioNombre;
+    private final String usuarioApellido;
+    private final String usuarioRolDescripcion;
+
     // Constructor privado inmutable
     private UserPrincipal(UUID id, String email, String password, UUID empresaId,
             boolean isSaasAdmin, boolean estado, boolean empresaEstado,
-            Collection<? extends GrantedAuthority> authorities) {
+            Collection<? extends GrantedAuthority> authorities, String usuarioNombre,
+            String usuarioApellido, String usuarioRolDescripcion) {
         this.id = id;
         this.username = email;
         this.password = password;
@@ -42,6 +47,9 @@ public class UserPrincipal implements UserDetails {
         this.usuarioEstado = estado;
         this.empresaEstado = empresaEstado;
         this.authorities = authorities;
+        this.usuarioNombre = usuarioNombre;
+        this.usuarioApellido = usuarioApellido;
+        this.usuarioRolDescripcion = usuarioRolDescripcion;
     }
 
     // Método para crear el Super Usuario (SaaS Owner)
@@ -58,7 +66,10 @@ public class UserPrincipal implements UserDetails {
                 true,
                 true, // Para el admin, el sistema siempre está "activo"
                 true,
-                authorities);
+                authorities,
+                dto.getNombre(),
+                dto.getApellido(),
+                dto.getRolDescripcion());
     }
 
     // Método para crear el Usuario de Cliente
@@ -76,7 +87,10 @@ public class UserPrincipal implements UserDetails {
                 false,
                 dto.isEstado(),
                 dto.isEmpresaEstado(),
-                authorities);
+                authorities,
+                dto.getNombre(),
+                dto.getApellido(),
+                dto.getRolDescripcion());
     }
 
     // --- Métodos obligatorios de UserDetails ---
@@ -119,6 +133,18 @@ public class UserPrincipal implements UserDetails {
 
     public boolean isEstado() {
         return usuarioEstado;
+    }
+
+    public String getUsuarioNombre() {
+        return usuarioNombre;
+    }
+
+    public String getUsuarioApellido() {
+        return usuarioApellido;
+    }
+
+    public String getUsuarioRolDescripcion() {
+        return usuarioRolDescripcion;
     }
 
 }
