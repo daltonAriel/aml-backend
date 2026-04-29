@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aml.app.config.response.ApiResponse;
 import com.aml.app.modules.empresa.dto.BuscarEmpresaRequest;
 import com.aml.app.modules.empresa.dto.CrearEmpresaRequest;
+import com.aml.app.modules.empresa.dto.EmpresaDireccionResponse;
 import com.aml.app.modules.empresa.dto.EmpresaResponse;
+import com.aml.app.shared.ValidationRequest;
+import com.aml.app.shared.ValidationResponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class EmpresaController {
-    
+
     private final EmpresaService empresaService;
 
     @GetMapping("/{empresaId}")
@@ -75,4 +78,45 @@ public class EmpresaController {
         empresaService.eliminar(empresaId);
         return ResponseEntity.ok(ApiResponse.success(null, "Empresa eliminada exitosamente"));
     }
+
+    @PostMapping("/validar-empresa-nombre")
+    public ResponseEntity<ApiResponse<ValidationResponse>> validarEmpresaNombre(
+            @RequestBody ValidationRequest request) {
+        String nombre = request.getValor();
+        ValidationResponse validationResponse = empresaService.validarEmpresaNombre(nombre);
+        return ResponseEntity.ok(ApiResponse.success(validationResponse, "Validación completada"));
+    }
+
+    @PostMapping("/validar-empresa-nombre/{empresaId}")
+    public ResponseEntity<ApiResponse<ValidationResponse>> validarEmpresaNombreId(
+            @PathVariable UUID empresaId,
+            @RequestBody ValidationRequest request) {
+        String nombre = request.getValor();
+        ValidationResponse validationResponse = empresaService.validarEmpresaNombreById(nombre, empresaId);
+        return ResponseEntity.ok(ApiResponse.success(validationResponse, "Validación completada"));
+    }
+
+    @PostMapping("/validar-empresa-codigo")
+    public ResponseEntity<ApiResponse<ValidationResponse>> validarEmpresaCodigo(
+            @RequestBody ValidationRequest request) {
+        String codigo = request.getValor();
+        ValidationResponse validationResponse = empresaService.validarEmpresaCodigo(codigo);
+        return ResponseEntity.ok(ApiResponse.success(validationResponse, "Validación completada"));
+    }
+
+    @PostMapping("/validar-empresa-codigo/{empresaId}")
+    public ResponseEntity<ApiResponse<ValidationResponse>> validarEmpresaCodigoId(
+            @PathVariable UUID empresaId,
+            @RequestBody ValidationRequest request) {
+        String codigo = request.getValor();
+        ValidationResponse validationResponse = empresaService.validarEmpresaCodigoById(codigo, empresaId);
+        return ResponseEntity.ok(ApiResponse.success(validationResponse, "Validación completada"));
+    }
+
+    @GetMapping("/{empresaId}/direcciones")
+    public ResponseEntity<ApiResponse<EmpresaDireccionResponse>> buscarPorIdDirecciones(@PathVariable UUID empresaId) {
+        EmpresaDireccionResponse empresa = empresaService.obtenerEmpresaPorIdDirecciones(empresaId);
+        return ResponseEntity.ok(ApiResponse.success(empresa, "Empresa Obtenida"));
+    }
+
 }

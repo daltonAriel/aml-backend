@@ -12,7 +12,7 @@ import lombok.Data;
 @Builder
 public class CargarLogoRequest {
     @NotNull(message = "El archivo de imagen es obligatorio.")
-    @ValidImageFile(maxSize = 5 * 1024
-            * 1024, message = "La imagen debe ser una imagen válida (JPEG, PNG) y no debe exceder los 5 MB.")
-    private MultipartFile logo;
+    @ValidImageFile(maxSize = 3 * 1024
+            * 1024, message = "La imagen debe ser una imagen válida (JPG, PNG) y no debe exceder los 3 MB.")
+    private MultipartFile temaLogo;
 }

@@ -2,10 +2,12 @@ package com.aml.app.modules.empresa.mappers;
 
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import com.aml.app.modules.empresa.EmpresaEntity;
 import com.aml.app.modules.empresa.dto.CrearEmpresaRequest;
+import com.aml.app.modules.empresa.dto.EmpresaDireccionResponse;
 import com.aml.app.modules.empresa.dto.EmpresaResponse;
 import com.aml.app.shared.StringUtils;
 
@@ -30,5 +32,9 @@ public abstract class EmpresaMapper {
     public abstract EmpresaEntity toEntity(CrearEmpresaRequest request);
 
     public abstract EmpresaResponse toResponse(EmpresaEntity entity);
+
+    @Mapping(target = "cantonId", source = "parroquia.canton.cantonId")
+    @Mapping(target = "provinciaId", source = "parroquia.canton.provincia.provinciaId")
+    public abstract EmpresaDireccionResponse toEmpresaDireccionResponse(EmpresaEntity entity);
 
 }

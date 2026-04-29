@@ -39,7 +39,7 @@ public class CantonService {
             List<Predicate> mainPredicates = new ArrayList<>();
             // Filtro por ProvinciaId
             if (provinciaId != null) {
-                mainPredicates.add(cb.equal(root.get("provinciaId"), provinciaId));
+                mainPredicates.add(cb.equal(root.get("provinciaId"), provinciaId.toString()));
             }
             return cb.and(mainPredicates.toArray(new Predicate[0]));
         };

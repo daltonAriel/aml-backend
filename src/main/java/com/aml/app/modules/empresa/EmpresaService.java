@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aml.app.modules.empresa.dto.BuscarEmpresaRequest;
 import com.aml.app.modules.empresa.dto.CrearEmpresaRequest;
+import com.aml.app.modules.empresa.dto.EmpresaDireccionResponse;
 import com.aml.app.modules.empresa.dto.EmpresaResponse;
 import com.aml.app.modules.empresa.mappers.EmpresaMapper;
 import com.aml.app.modules.tema.TemaEntity;
 import com.aml.app.modules.tema.TemaRepository;
 import com.aml.app.shared.StringUtils;
+import com.aml.app.shared.ValidationResponse;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.Predicate;
@@ -37,16 +39,16 @@ public class EmpresaService {
     public EmpresaResponse crearEmpresa(CrearEmpresaRequest request) {
         EmpresaEntity empresaEntity = empresaRepository.save(empresaMapper.toEntity(request));
 
-        //Datos por defecto
+        // Datos por defecto
         TemaEntity temaEntity = new TemaEntity();
         temaEntity.setEmpresaId(empresaEntity.getEmpresaId());
-        temaEntity.setSlogan("Sistema de Gestión y Cumplimiento");
-        temaEntity.setPrimary("#0F172A");
-        temaEntity.setSecondary("#475569");
-        temaEntity.setTertiary("#E2E8F0");
+        temaEntity.setTemaSlogan("");
+        temaEntity.setTemaPrimary("");
+        temaEntity.setTemaSecondary("");
+        temaEntity.setTemaTertiary("");
         temaEntity.setEmpresa(empresaEntity);
         temaRepository.save(temaEntity);
-        
+
         return empresaMapper.toResponse(empresaEntity);
     }
 
@@ -64,17 +66,16 @@ public class EmpresaService {
         EmpresaEntity entity = empresaRepository.findById(empresaId)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la empresa"));
 
-        entity.setEmpresaCodigo(null);
+        entity.setEmpresaCodigo(StringUtils.normalizarEspacios(request.getEmpresaCodigo()));
         entity.setEmpresaRuc(StringUtils.normalizarEspacios(request.getEmpresaRuc()));
         entity.setEmpresaNombre(StringUtils.normalizarEspacios(request.getEmpresaNombre()));
         entity.setEmpresaSiglas(StringUtils.normalizarEspacios(request.getEmpresaSiglas()));
-        
+
         entity.setEmpresaTelefono(request.getEmpresaTelefono());
         entity.setEmpresaEmail(request.getEmpresaEmail());
         entity.setEmpresaWeb(request.getEmpresaWeb());
 
         entity.setEmpresaEstado(request.getEmpresaEstado());
-
 
         entity = empresaRepository.save(entity);
         return empresaMapper.toResponse(entity);
@@ -98,7 +99,7 @@ public class EmpresaService {
                 mainPredicates.add(cb.equal(root.get("empresaEstado"), request.getEstado()));
             }
 
-            // Filtro por Nombre RUC  Siglas o Código
+            // Filtro por Nombre RUC Siglas o Código
             if (request.getFiltro() != null && !request.getFiltro().isBlank()) {
                 String[] terminosBusqueda = request.getFiltro().toUpperCase().split("\\s+");
                 List<Predicate> palabraPredicates = new ArrayList<>();
@@ -106,7 +107,7 @@ public class EmpresaService {
                 for (String palabra : terminosBusqueda) {
                     String pattern = "%" + palabra + "%";
                     Predicate rucLike = cb.like(cb.upper(root.get("empresaRuc")), pattern);
-                    Predicate nombreLike = cb.like(cb.upper(root.get("emoresaNombre")), pattern);
+                    Predicate nombreLike = cb.like(cb.upper(root.get("empresaNombre")), pattern);
                     Predicate siglasLike = cb.like(cb.upper(root.get("empresaSiglas")), pattern);
                     Predicate codigoLike = cb.like(cb.upper(root.get("empresaCodigo")), pattern);
                     palabraPredicates.add(cb.or(rucLike, nombreLike, siglasLike, codigoLike));
@@ -118,6 +119,53 @@ public class EmpresaService {
         };
 
         return empresaRepository.findAll(spec, pageable).map(empresaMapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public ValidationResponse validarEmpresaNombre(String empresaNombre) {
+
+        boolean existe = empresaRepository
+                .existsByEmpresaNombreIgnoreCase(StringUtils.normalizarEspacios(empresaNombre));
+        ValidationResponse validationResponse = ValidationResponse.builder()
+                .present(existe)
+                .build();
+        return validationResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public ValidationResponse validarEmpresaNombreById(String empresaNombre, UUID empresaId) {
+        boolean existe = empresaRepository.existsByEmpresaNombreIgnoreCaseAndEmpresaIdNot(
+                StringUtils.normalizarEspacios(empresaNombre), empresaId);
+        ValidationResponse validationResponse = ValidationResponse.builder()
+                .present(existe)
+                .build();
+        return validationResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public ValidationResponse validarEmpresaCodigo(String empresaCodigo) {
+        boolean existe = empresaRepository
+                .existsByEmpresaCodigoIgnoreCase(StringUtils.normalizarEspacios(empresaCodigo));
+        ValidationResponse validationResponse = ValidationResponse.builder()
+                .present(existe)
+                .build();
+        return validationResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public ValidationResponse validarEmpresaCodigoById(String empresaCodigo, UUID empresaId) {
+        boolean existe = empresaRepository.existsByEmpresaCodigoIgnoreCaseAndEmpresaIdNot(
+                StringUtils.normalizarEspacios(empresaCodigo), empresaId);
+        ValidationResponse validationResponse = ValidationResponse.builder()
+                .present(existe)
+                .build();
+        return validationResponse;
+    }
+
+    public EmpresaDireccionResponse obtenerEmpresaPorIdDirecciones(UUID empresaId) {
+        EmpresaEntity entity = empresaRepository.findById(empresaId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la empresa"));
+        return empresaMapper.toEmpresaDireccionResponse(entity);
     }
 
 }

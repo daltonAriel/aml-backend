@@ -10,11 +10,11 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class TemaResponse {
-    private UUID id;
+    private UUID temaId;
     private UUID empresaId;
-    private String slogan;
-    private String primary;
-    private String secondary;
-    private String tertiary;
-    private String logoUrl;
+    private String temaSlogan;
+    private String temaPrimary;
+    private String temaSecondary;
+    private String temaTertiary;
+    private String temaLogoUrl;
 }

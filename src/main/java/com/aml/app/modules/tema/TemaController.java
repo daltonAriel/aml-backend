@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/empresas/{empresaId}/temas")
+@RequestMapping("/api/v1/empresas/{empresaId}/tema")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class TemaController {
@@ -40,7 +40,7 @@ public class TemaController {
     public ResponseEntity<ApiResponse<TemaResponse>> actualizarLogo(@PathVariable UUID empresaId,
             @Valid @ModelAttribute CargarLogoRequest request) {
         try {
-            byte[] logoBytes = request.getLogo().getBytes();
+            byte[] logoBytes = request.getTemaLogo().getBytes();
             TemaResponse temaResponse = temaService.cargarLogo(empresaId, logoBytes);
             return ResponseEntity.ok(ApiResponse.success(temaResponse, "Logo actualizado exitosamente"));
         } catch (IOException e) {

@@ -8,5 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmpresaRepository extends JpaRepository<EmpresaEntity, UUID>, JpaSpecificationExecutor<EmpresaEntity> {
+    boolean existsByEmpresaNombreIgnoreCase(String empresaNombre);
 
+    boolean existsByEmpresaNombreIgnoreCaseAndEmpresaIdNot(String empresaNombre, UUID empresaId);
+
+    boolean existsByEmpresaCodigoIgnoreCase(String empresaRuc);
+
+    boolean existsByEmpresaCodigoIgnoreCaseAndEmpresaIdNot(String empresaRuc, UUID empresaId);
 }

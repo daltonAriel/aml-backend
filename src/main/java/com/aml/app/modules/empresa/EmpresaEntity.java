@@ -51,7 +51,7 @@ public class EmpresaEntity {
     @Column(name = "EMPRESA_CODIGO", unique = true)
     private String empresaCodigo;
 
-    @Column(name = "EMPRESA_RUC", unique = true, nullable = false, length = 13)
+    @Column(name = "EMPRESA_RUC", unique = false, nullable = false, length = 13)
     private String empresaRuc;
 
     @Column(name = "EMPRESA_NOMBRE", nullable = false)
@@ -103,11 +103,10 @@ public class EmpresaEntity {
     @JoinColumn(name = "PARROQUIA_ID", referencedColumnName = "PARROQUIA_ID", insertable = false, updatable = false)
     @ToString.Exclude
     private ParroquiaEntity parroquia;
-    
-    
+
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @Builder.Default
     private List<UsuarioEntity> usuarios = new ArrayList<>();
- 
+
 }

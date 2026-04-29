@@ -34,10 +34,10 @@ public class TemaService {
                 TemaEntity temaEntity = temaRepository.findOne(spec)
                                 .orElseThrow(() -> new EntityNotFoundException("No se encontró el tema de la empresa"));
 
-                temaEntity.setSlogan(StringUtils.normalizarEspacios(request.getSlogan()));
-                temaEntity.setPrimary(request.getPrimary());
-                temaEntity.setSecondary(request.getSecondary());
-                temaEntity.setTertiary(request.getTertiary());
+                temaEntity.setTemaSlogan(StringUtils.normalizarEspacios(request.getTemaSlogan()));
+                temaEntity.setTemaPrimary(request.getTemaPrimary());
+                temaEntity.setTemaPrimary(request.getTemaSecondary());
+                temaEntity.setTemaTertiary(request.getTemaTertiary());
 
                 return temaMapper.toResponse(temaRepository.save(temaEntity));
         }
@@ -48,7 +48,7 @@ public class TemaService {
 
                 TemaEntity entity = temaRepository.findOne(spec).orElseThrow(
                                 () -> new EntityNotFoundException("No se encontró el tema de la empresa"));
-                return temaMapper.toResponse(entity);                
+                return temaMapper.toResponse(entity);
         }
 
         public Optional<TemaResponse> obtenerPorId(UUID temaId) {
@@ -67,13 +67,13 @@ public class TemaService {
                                         .orElseThrow(() -> new EntityNotFoundException(
                                                         "No se encontró el tema de la empresa"));
 
-                        String oldTemaUrl = temaEntity.getLogoUrl();
+                        String oldTemaUrl = temaEntity.getTemaLogoUrl();
                         if (oldTemaUrl != null && !oldTemaUrl.isEmpty()) {
                                 storageLogo.eliminar(oldTemaUrl);
                         }
 
                         _nombreArchivo = storageLogo.guardar(logoBytes, "logo_" + empresaId + ".png");
-                        temaEntity.setLogoUrl(_nombreArchivo);
+                        temaEntity.setTemaLogoUrl(_nombreArchivo);
 
                         return temaMapper.toResponse(temaRepository.save(temaEntity));
                 } catch (Exception e) {

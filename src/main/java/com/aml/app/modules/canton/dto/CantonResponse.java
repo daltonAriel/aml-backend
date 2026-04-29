@@ -19,6 +19,6 @@ public class CantonResponse {
 
     private String cantonNombre;
 
-    private String provinciaId;
+    private UUID provinciaId;
 
 }

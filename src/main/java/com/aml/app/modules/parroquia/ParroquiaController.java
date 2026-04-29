@@ -26,9 +26,9 @@ public class ParroquiaController {
 
     private final ParroquiaService parroquiaService;
 
-    @GetMapping("/{cantonId}")
-    public ResponseEntity<ApiResponse<ParroquiaResponse>> buscarPorId(@PathVariable UUID cantonId) {
-        ParroquiaResponse parroquiaResponse = parroquiaService.buscarPorId(cantonId);
+    @GetMapping("/{parroquiaId}")
+    public ResponseEntity<ApiResponse<ParroquiaResponse>> buscarPorId(@PathVariable UUID parroquiaId) {
+        ParroquiaResponse parroquiaResponse = parroquiaService.buscarPorId(parroquiaId);
         return ResponseEntity.ok(ApiResponse.success(parroquiaResponse, "Parroquia obtenida exitosamente"));
     }
 

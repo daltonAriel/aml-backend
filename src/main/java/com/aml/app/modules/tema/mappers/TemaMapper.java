@@ -15,12 +15,12 @@ public abstract class TemaMapper {
     @BeforeMapping
     protected void sanitizeRequest(ActualizarTemaRequest request) {
         if (request != null) {
-            request.setSlogan(StringUtils.normalizarEspacios(request.getSlogan()));
+            request.setTemaSlogan(StringUtils.normalizarEspacios(request.getTemaSlogan()));
         }
     }
 
     public abstract TemaEntity toEntity(ActualizarTemaRequest request);
 
-    public abstract TemaResponse toResponse(TemaEntity  entity);
+    public abstract TemaResponse toResponse(TemaEntity entity);
 
 }

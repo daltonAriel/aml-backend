@@ -30,7 +30,7 @@ public class CrearEmpresaRequest {
     private String empresaSiglas;
 
     // --- UBICACIÓN ---
-    @NotBlank(message = "El id de Parroquia es obligatorio")
+    @NotNull(message = "El id de Parroquia es obligatorio")
     private UUID parroquiaId;
 
     // --- CONTACTO ---

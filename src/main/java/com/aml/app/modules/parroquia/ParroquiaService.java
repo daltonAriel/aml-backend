@@ -40,7 +40,7 @@ public class ParroquiaService {
             List<Predicate> mainPredicates = new ArrayList<>();
             // Filtro por CantonId
             if (cantonId != null) {
-                mainPredicates.add(cb.equal(root.get("cantonId"), cantonId));
+                mainPredicates.add(cb.equal(root.get("cantonId"), cantonId.toString()));
             }
             return cb.and(mainPredicates.toArray(new Predicate[0]));
         };

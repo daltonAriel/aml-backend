@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ParroquiaResponse {
 
-    private UUID parroquiaId; 
+    private UUID parroquiaId;
 
-    private String codigo;   
+    private String parroquiaCodigo;
 
-    private String nombre;  
+    private String parroquiaNombre;
 
     private UUID cantonId;
-    
+
 }
