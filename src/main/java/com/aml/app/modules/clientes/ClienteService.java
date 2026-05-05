@@ -3,8 +3,6 @@ package com.aml.app.modules.clientes;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.validation.Validator;
-
 import org.springframework.stereotype.Service;
 
 import com.aml.app.modules.clientes.dto.ClienteBulkRequest;
@@ -19,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
-    private final Validator validator;
+    // private final Validator validator;
     private final EmpresaService empresaService;
 
     public ClienteBulkResponse cargaMasiva(ClienteBulkRequest request, String empresaCodigo) {
