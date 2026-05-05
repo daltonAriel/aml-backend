@@ -1,5 +1,6 @@
 package com.aml.app.security.dto;
 
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.Builder;
@@ -15,5 +16,5 @@ public class UserDetailSaaS {
 
     private String nombre;
     private String apellido;
-    private String rolDescripcion;
+    private Set<String> rolDescripcion;
 }

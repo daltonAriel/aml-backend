@@ -32,13 +32,13 @@ public class UserPrincipal implements UserDetails {
 
     private final String usuarioNombre;
     private final String usuarioApellido;
-    private final String usuarioRolDescripcion;
+    private final Set<String> usuarioRolDescripcion;
 
     // Constructor privado inmutable
     private UserPrincipal(UUID id, String email, String password, UUID empresaId,
             boolean isSaasAdmin, boolean estado, boolean empresaEstado,
             Collection<? extends GrantedAuthority> authorities, String usuarioNombre,
-            String usuarioApellido, String usuarioRolDescripcion) {
+            String usuarioApellido, Set<String> usuarioRolDescripcion) {
         this.id = id;
         this.username = email;
         this.password = password;
@@ -143,7 +143,7 @@ public class UserPrincipal implements UserDetails {
         return usuarioApellido;
     }
 
-    public String getUsuarioRolDescripcion() {
+    public Set<String> getUsuarioRolDescripcion() {
         return usuarioRolDescripcion;
     }
 

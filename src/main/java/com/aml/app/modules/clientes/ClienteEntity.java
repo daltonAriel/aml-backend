@@ -1,7 +1,7 @@
 package com.aml.app.modules.clientes;
 
 import java.sql.Types;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -27,7 +27,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "CLIENTES", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_cliente_empresa", columnNames = { "CLIENTE_CODIGO", "EMPRESA_CODIGO" })
+        @UniqueConstraint(name = "uk_cliente_empresa", columnNames = { "CLIENTE_CODIGO", "EMPRESA_ID" })
 })
 @Getter
 @Setter
@@ -44,7 +44,8 @@ public class ClienteEntity {
     private UUID clienteId;
 
     @Column(name = "CLIENTE_CODIGO")
-    private String clienteCodigo;
+    private String clienteCodigo; // relacion
+
     @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "EMPRESA_ID")
 
@@ -75,7 +76,7 @@ public class ClienteEntity {
     @Column(name = "CLIENTE_TELEFONO")
     private String clienteTelefono;
     @Column(name = "CLIENTE_CELULAR")
-    private String CLIENTE_CELULAR;
+    private String clienteCelular;
 
     @Column(name = "CLIENTE_PROVINCIA")
     private String clienteProvincia;
@@ -94,11 +95,11 @@ public class ClienteEntity {
     private String clienteReferenciaUbicDir;
 
     @Column(name = "CLIENTE_FECHA_NACIMIENTO")
-    private LocalDate clienteFechaNacimiento;
+    private LocalDateTime clienteFechaNacimiento;
     @Column(name = "CLIENTE_FECHA_INGRESO")
-    private LocalDate clienteFechaIngreso;
+    private LocalDateTime clienteFechaIngreso;
     @Column(name = "CLIENTE_FECHA_CONSTITUCION")
-    private LocalDate clienteFechaConstitucion;
+    private LocalDateTime clienteFechaConstitucion;
 
     @Column(name = "CLIENTE_SEXO")
     private String clienteSexo;

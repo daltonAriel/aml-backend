@@ -2,6 +2,7 @@ package com.aml.app.security;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,7 +43,7 @@ public class UserDetailService implements UserDetailsService {
                     .password(userAdmin.getUsuarioAdminContrasena())
                     .nombre(userAdmin.getUsuarioAdiminNombre())
                     .apellido(userAdmin.getUsuarioAdminApellido())
-                    .rolDescripcion("Administrador")
+                    .rolDescripcion(Collections.singleton("Administrador"))
                     .activo(true)
                     .build();
 
@@ -71,10 +72,18 @@ public class UserDetailService implements UserDetailsService {
                     .empresaId(user.getEmpresaId())
                     .estado(user.isUsuarioEstado())
                     .empresaEstado(user.getEmpresa().isEmpresaEstado())
-                    .roles(Collections.singleton(user.getRol().getRolNombre()))
+                    .roles(
+                            user.getUsuarioRoles()
+                                    .stream()
+                                    .map(ur -> ur.getRol().getRolNombre())
+                                    .collect(Collectors.toSet()))
                     .nombre(user.getUsuarioNombre())
                     .apellido(user.getUsuarioApellido())
-                    .rolDescripcion(user.getRol().getRolDescripcion())
+                    .rolDescripcion(
+                            user.getUsuarioRoles()
+                                    .stream()
+                                    .map(ur -> ur.getRol().getRolDescripcion())
+                                    .collect(Collectors.toSet()))
                     .build();
 
             return UserPrincipal.create(userDto);
@@ -95,7 +104,7 @@ public class UserDetailService implements UserDetailsService {
                     .password(userAdmin.getUsuarioAdminContrasena())
                     .nombre(userAdmin.getUsuarioAdiminNombre())
                     .apellido(userAdmin.getUsuarioAdminApellido())
-                    .rolDescripcion("Administrador")
+                    .rolDescripcion(Collections.singleton("Administrador"))
                     .activo(true)
                     .build();
 
@@ -128,10 +137,18 @@ public class UserDetailService implements UserDetailsService {
                     .empresaId(user.getEmpresaId())
                     .estado(user.isUsuarioEstado())
                     .empresaEstado(user.getEmpresa().isEmpresaEstado())
-                    .roles(Collections.singleton(user.getRol().getRolNombre()))
+                    .roles(
+                            user.getUsuarioRoles()
+                                    .stream()
+                                    .map(ur -> ur.getRol().getRolNombre())
+                                    .collect(Collectors.toSet()))
                     .nombre(user.getUsuarioNombre())
                     .apellido(user.getUsuarioApellido())
-                    .rolDescripcion(user.getRol().getRolDescripcion())
+                    .rolDescripcion(
+                            user.getUsuarioRoles()
+                                    .stream()
+                                    .map(ur -> ur.getRol().getRolDescripcion())
+                                    .collect(Collectors.toSet()))
                     .build();
 
             return UserPrincipal.create(userDto);

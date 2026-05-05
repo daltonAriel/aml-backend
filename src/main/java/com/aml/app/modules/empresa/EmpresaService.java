@@ -2,6 +2,7 @@ package com.aml.app.modules.empresa;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -173,6 +174,11 @@ public class EmpresaService {
         EmpresaEntity entity = empresaRepository.findById(empresaId)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la empresa"));
         return empresaMapper.toEmpresaDireccionesLogo(entity);
+    }
+
+    public Optional<EmpresaResponse> obtenerEmpresaCodigo(String empresaCodigo) {
+        return empresaRepository.findByEmpresaCodigo(empresaCodigo)
+                .map(empresaMapper::toResponse);
     }
 
 }

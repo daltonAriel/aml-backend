@@ -23,5 +23,5 @@ public class UserDetailEmpresa {
 
     private String nombre;
     private String apellido;
-    private String rolDescripcion;
+    private Set<String> rolDescripcion;
 }

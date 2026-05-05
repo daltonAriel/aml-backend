@@ -3,7 +3,7 @@ package com.aml.app.modules.usuarioRol;
 import java.io.Serializable;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -17,12 +17,11 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Embeddable
 public class UsuarioRolId implements Serializable {
 
-    @Column(name = "USUARIO_ID")
     private UUID userId;
 
-    @Column(name = "ROL_ID")
     private UUID roleId;
 
 }

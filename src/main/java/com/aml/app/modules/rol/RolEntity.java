@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
 
-import com.aml.app.modules.usuario.UsuarioEntity;
+import com.aml.app.modules.usuarioRol.UsuarioRolEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,7 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "ROLES")
+@Table(name = "ROL")
 @Getter
 @Setter
 @Builder
@@ -74,10 +74,10 @@ public class RolEntity {
         }
     }
 
-    //Relaciones
+    // Relaciones
 
-    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL)
     @ToString.Exclude
     @Builder.Default
-    private List<UsuarioEntity> usuarios = new ArrayList<>();
+    private List<UsuarioRolEntity> usuarioRoles = new ArrayList<>();
 }

@@ -2,6 +2,8 @@ package com.aml.app.modules.usuario;
 
 import java.sql.Types;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -9,9 +11,10 @@ import org.hibernate.annotations.JdbcTypeCode;
 import com.aml.app.modules.agencia.AgenciaEntity;
 import com.aml.app.modules.departamento.DepartamentoEntity;
 import com.aml.app.modules.empresa.EmpresaEntity;
-import com.aml.app.modules.rol.RolEntity;
+import com.aml.app.modules.usuarioRol.UsuarioRolEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,6 +23,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -96,10 +100,6 @@ public class UsuarioEntity {
     @JdbcTypeCode(Types.VARCHAR)
     private UUID departamentoId;
 
-    @Column(name = "ROL_ID", nullable = false)
-    @JdbcTypeCode(Types.VARCHAR)
-    private UUID rolId;
-
     @PrePersist
     protected void onCreate() {
         this.usuarioFechaCreacion = LocalDateTime.now();
@@ -125,8 +125,8 @@ public class UsuarioEntity {
     @JoinColumn(name = "AGENCIA_ID", referencedColumnName = "AGENCIA_ID", insertable = false, updatable = false)
     private AgenciaEntity agencia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROL_ID", referencedColumnName = "ROL_ID", insertable = false, updatable = false)
-    private RolEntity rol;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<UsuarioRolEntity> usuarioRoles = new ArrayList<>();
 
 }
