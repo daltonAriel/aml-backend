@@ -11,6 +11,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import com.aml.app.modules.agencia.AgenciaEntity;
 import com.aml.app.modules.departamento.DepartamentoEntity;
 import com.aml.app.modules.parroquia.ParroquiaEntity;
+import com.aml.app.modules.tema.TemaEntity;
 import com.aml.app.modules.usuario.UsuarioEntity;
 
 import jakarta.persistence.CascadeType;
@@ -23,6 +24,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -108,5 +110,9 @@ public class EmpresaEntity {
     @ToString.Exclude
     @Builder.Default
     private List<UsuarioEntity> usuarios = new ArrayList<>();
+
+    @OneToOne(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private TemaEntity tema;
 
 }

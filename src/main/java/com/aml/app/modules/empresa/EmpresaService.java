@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aml.app.modules.empresa.dto.BuscarEmpresaRequest;
 import com.aml.app.modules.empresa.dto.CrearEmpresaRequest;
 import com.aml.app.modules.empresa.dto.EmpresaDireccionResponse;
+import com.aml.app.modules.empresa.dto.EmpresaDireccionesLogoResponse;
 import com.aml.app.modules.empresa.dto.EmpresaResponse;
 import com.aml.app.modules.empresa.mappers.EmpresaMapper;
 import com.aml.app.modules.tema.TemaEntity;
@@ -166,6 +167,12 @@ public class EmpresaService {
         EmpresaEntity entity = empresaRepository.findById(empresaId)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la empresa"));
         return empresaMapper.toEmpresaDireccionResponse(entity);
+    }
+
+    public EmpresaDireccionesLogoResponse obtenerEmpresaPorIdDireccionesLogo(UUID empresaId) {
+        EmpresaEntity entity = empresaRepository.findById(empresaId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la empresa"));
+        return empresaMapper.toEmpresaDireccionesLogo(entity);
     }
 
 }

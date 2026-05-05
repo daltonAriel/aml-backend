@@ -19,6 +19,7 @@ import com.aml.app.config.response.ApiResponse;
 import com.aml.app.modules.empresa.dto.BuscarEmpresaRequest;
 import com.aml.app.modules.empresa.dto.CrearEmpresaRequest;
 import com.aml.app.modules.empresa.dto.EmpresaDireccionResponse;
+import com.aml.app.modules.empresa.dto.EmpresaDireccionesLogoResponse;
 import com.aml.app.modules.empresa.dto.EmpresaResponse;
 import com.aml.app.shared.ValidationRequest;
 import com.aml.app.shared.ValidationResponse;
@@ -116,6 +117,13 @@ public class EmpresaController {
     @GetMapping("/{empresaId}/direcciones")
     public ResponseEntity<ApiResponse<EmpresaDireccionResponse>> buscarPorIdDirecciones(@PathVariable UUID empresaId) {
         EmpresaDireccionResponse empresa = empresaService.obtenerEmpresaPorIdDirecciones(empresaId);
+        return ResponseEntity.ok(ApiResponse.success(empresa, "Empresa Obtenida"));
+    }
+
+    @GetMapping("/{empresaId}/direcciones-logo")
+    public ResponseEntity<ApiResponse<EmpresaDireccionesLogoResponse>> buscarPorIdDireccionesLogo(
+            @PathVariable UUID empresaId) {
+        EmpresaDireccionesLogoResponse empresa = empresaService.obtenerEmpresaPorIdDireccionesLogo(empresaId);
         return ResponseEntity.ok(ApiResponse.success(empresa, "Empresa Obtenida"));
     }
 

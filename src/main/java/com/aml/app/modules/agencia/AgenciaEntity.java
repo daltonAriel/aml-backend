@@ -57,7 +57,7 @@ public class AgenciaEntity {
     @JdbcTypeCode(Types.VARCHAR)
     private UUID empresaId;
 
-    @Column(name = "AGENCIA_CODIGO", nullable = false, length = 10)
+    @Column(name = "AGENCIA_CODIGO", nullable = false, length = 10, unique = true)
     private String agenciaCodigo;
 
     @Column(name = "AGENCIA_NOMBRE", nullable = false)

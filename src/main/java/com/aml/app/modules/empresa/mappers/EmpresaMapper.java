@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 import com.aml.app.modules.empresa.EmpresaEntity;
 import com.aml.app.modules.empresa.dto.CrearEmpresaRequest;
 import com.aml.app.modules.empresa.dto.EmpresaDireccionResponse;
+import com.aml.app.modules.empresa.dto.EmpresaDireccionesLogoResponse;
 import com.aml.app.modules.empresa.dto.EmpresaResponse;
 import com.aml.app.shared.StringUtils;
 
@@ -36,5 +37,11 @@ public abstract class EmpresaMapper {
     @Mapping(target = "cantonId", source = "parroquia.canton.cantonId")
     @Mapping(target = "provinciaId", source = "parroquia.canton.provincia.provinciaId")
     public abstract EmpresaDireccionResponse toEmpresaDireccionResponse(EmpresaEntity entity);
+
+    @Mapping(target = "provinciaNombre", source = "parroquia.canton.provincia.provinciaNombre")
+    @Mapping(target = "cantonNombre", source = "parroquia.canton.cantonNombre")
+    @Mapping(target = "parroquiaNombre", source = "parroquia.parroquiaNombre")
+    @Mapping(target = "temaLogoUrl", source = "tema.temaLogoUrl")
+    public abstract EmpresaDireccionesLogoResponse toEmpresaDireccionesLogo(EmpresaEntity entity);
 
 }

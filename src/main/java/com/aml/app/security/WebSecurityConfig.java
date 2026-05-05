@@ -58,6 +58,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/login/**").permitAll()
                         .requestMatchers("/api/v1/resources/**").permitAll()
+                        .requestMatchers("/api/v1/menu/**").permitAll()
                         .anyRequest().authenticated());
 
         http.addFilterBefore(authTokenFilter,
