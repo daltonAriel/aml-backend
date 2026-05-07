@@ -34,8 +34,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 boolean isSaasAdmin = jwtUtils.getIsSaasFromJwt(jwt);
                 UserDetails userDetails = null;
 
-                //implementar redis para verificacion, si falla resids usar comprobacion en base de datos(mas lenta)
-                // 
+                // implementar redis para verificacion, si falla resids usar comprobacion en
+                // base de datos(mas lenta)
+                //
 
                 if (isSaasAdmin) {
                     userDetails = userDetailService.loadUserByUsernameAdmin(email);
@@ -48,8 +49,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-
-                
                 // Guardar la autenticación en el contexto
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

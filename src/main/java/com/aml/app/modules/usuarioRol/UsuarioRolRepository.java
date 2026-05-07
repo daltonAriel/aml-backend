@@ -1,5 +1,9 @@
 package com.aml.app.modules.usuarioRol;
 
-public interface UsuarioRolRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UsuarioRolRepository extends JpaRepository<UsuarioRolEntity, UsuarioRolId> {
 
 }

@@ -1,6 +1,5 @@
-package com.aml.app.modules.usuarioRol;
+package com.aml.app.modules.menuRol;
 
-import java.io.Serializable;
 import java.sql.Types;
 import java.util.UUID;
 
@@ -21,10 +20,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class UsuarioRolId implements Serializable {
+public class MenuRolId {
 
     @JdbcTypeCode(Types.VARCHAR)
-    private UUID usuarioId;
+    private UUID menuId;
 
     @JdbcTypeCode(Types.VARCHAR)
     private UUID rolId;

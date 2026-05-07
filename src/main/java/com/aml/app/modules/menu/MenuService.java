@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aml.app.modules.menu.dto.CrearMenuRequest;
 import com.aml.app.modules.menu.dto.MenuResponse;
+import com.aml.app.modules.menu.dto.ReordenarMenuRequest;
 import com.aml.app.modules.menu.mappers.MenuMapper;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +27,7 @@ public class MenuService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public MenuResponse obtenerMenuPorId(UUID menuId) {
         return menuRepository.findById(menuId).map(menuMapper::toResponse)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró el menu"));
@@ -54,6 +56,29 @@ public class MenuService {
             menuEntity = menuRepository.save(menuEntity);
             return menuMapper.toResponse(menuEntity);
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void ReordenarMenu(ReordenarMenuRequest reordenarMenuRequest) {
+        int contador = 0;
+        for (UUID menuId : reordenarMenuRequest.getListaMenuId()) {
+            MenuEntity menu = menuRepository.findById(menuId)
+                    .orElseThrow(() -> new EntityNotFoundException("No se encontró el menu"));
+            menu.setMenuOrden(contador);
+            menuRepository.save(menu);
+            contador++;
+        }
+    }
+
+    @Transactional
+    public void actualizarMenu(UUID menuId, CrearMenuRequest menuRequest) {
+        MenuEntity menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el menu"));
+        menu.setMenuLabel(menuRequest.getMenuLabel());
+        menu.setMenuUrl(menuRequest.getMenuUrl().replaceAll("\\s", ""));
+        menu.setMenuIcon(menuRequest.getMenuIcon());
+        menu.setMenuEstado(menuRequest.getMenuEstado());
+        menuRepository.save(menu);
     }
 
 }

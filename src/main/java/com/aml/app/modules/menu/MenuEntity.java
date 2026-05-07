@@ -1,10 +1,13 @@
 package com.aml.app.modules.menu;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
+
+import com.aml.app.modules.menuRol.MenuRolEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -57,4 +60,8 @@ public class MenuEntity {
     private String menuIcon;
     private Integer menuOrden;
     private Boolean menuEstado;
+
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<MenuRolEntity> menuRoles = new ArrayList<>();
 }

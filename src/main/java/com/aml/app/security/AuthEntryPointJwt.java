@@ -9,7 +9,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,7 +24,8 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
 
-        // 1. Buscamos si el filtro guardó una excepción específica (como Malformed o Expired)
+        // 1. Buscamos si el filtro guardó una excepción específica (como Malformed o
+        // Expired)
         Exception exception = (Exception) request.getAttribute("exception");
 
         // 2. Si no hay una excepción guardada, usamos la genérica de Auth
@@ -35,7 +35,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
         // 3. ¡MAGIA! Redirigimos la excepción a tu GlobalExceptionHandler
         resolver.resolveException(request, response, null, exception);
-       
+
     }
 
 }

@@ -20,7 +20,7 @@ public abstract class MenuMapper {
     protected void sanitizeRequest(CrearMenuRequest request) {
         if (request != null) {
             request.setMenuLabel(StringUtils.normalizarEspacios(request.getMenuLabel()));
-            request.setMenuUrl(StringUtils.normalizarEspacios(request.getMenuUrl()));
+            request.setMenuUrl(request.getMenuUrl().replaceAll("\\s", ""));
             request.setMenuIcon(StringUtils.normalizarEspacios(request.getMenuIcon()));
         }
     }

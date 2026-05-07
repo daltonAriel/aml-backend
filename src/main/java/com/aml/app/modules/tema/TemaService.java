@@ -36,7 +36,7 @@ public class TemaService {
 
                 temaEntity.setTemaSlogan(StringUtils.normalizarEspacios(request.getTemaSlogan()));
                 temaEntity.setTemaPrimary(request.getTemaPrimary());
-                temaEntity.setTemaPrimary(request.getTemaSecondary());
+                temaEntity.setTemaSecondary(request.getTemaSecondary());
                 temaEntity.setTemaTertiary(request.getTemaTertiary());
 
                 return temaMapper.toResponse(temaRepository.save(temaEntity));
